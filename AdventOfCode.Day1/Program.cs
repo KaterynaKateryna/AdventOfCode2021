@@ -9,5 +9,5 @@ long increasesPart1 = sonarSweep.CountIncreases(input);
 Console.WriteLine(increasesPart1);
 
 // part 2
-long increasesPart2 = sonarSweep.CoundIncreasesOfMeasurementWindows(input);
+long increasesPart2 = sonarSweep.CountIncreasesOfMeasurementWindows(input);
 Console.WriteLine(increasesPart2);

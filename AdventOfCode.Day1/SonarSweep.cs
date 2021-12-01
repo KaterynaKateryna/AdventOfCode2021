@@ -22,7 +22,7 @@ public class SonarSweep
         return increases;
     }
 
-    public long CoundIncreasesOfMeasurementWindows(int[] input)
+    public long CountIncreasesOfMeasurementWindows(int[] input)
     {
         int[] measurementWindows = GetMeasurementWindows(input, 3);
         return CountIncreases(measurementWindows);
