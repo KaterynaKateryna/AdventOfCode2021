@@ -26,7 +26,6 @@ public class Dive
                 case Direction.forward:
                     horizontal += command.Value;
                     break;
-
             }
         }
 
@@ -53,7 +52,6 @@ public class Dive
                     horizontal += command.Value;
                     vertical += (aim * command.Value);
                     break;
-
             }
         }
 
