@@ -2,9 +2,13 @@
 using System.Collections;
 
 // day 3
-PowerConsumption powerConsumption = new PowerConsumption();
-bool[][] input = await powerConsumption.GetInput();
+BinaryDiagnostic diagnostic = new BinaryDiagnostic();
+bool[][] input = await diagnostic.GetInput();
 
 // part 1
-long result = powerConsumption.CalculatePowerConsumption(input);
-Console.WriteLine(result);
+long powerConsumption = diagnostic.CalculatePowerConsumption(input);
+Console.WriteLine(powerConsumption);
+
+// part 2
+long lifeSupportRating = diagnostic.CalculateLifeSupportRating(input);
+Console.WriteLine(lifeSupportRating);
