@@ -1,6 +1,4 @@
-﻿using System.Collections;
-
-namespace AdventOfCode.Day3;
+﻿namespace AdventOfCode.Day3;
 
 public class BinaryDiagnostic
 {
