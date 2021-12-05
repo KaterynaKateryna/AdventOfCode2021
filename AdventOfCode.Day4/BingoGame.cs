@@ -1,7 +1,16 @@
 ﻿namespace AdventOfCode.Day4;
 
-public record BingoGame(int[] Numbers, Board[] Boards)
+public class BingoGame
 {
+    public BingoGame(int[] numbers, Board[] boards)
+    {
+        Numbers = numbers;
+        Boards = boards;
+    }
+
+    public int[] Numbers { get; }
+    public Board[] Boards { get; set; }
+
     public static BingoGame Parse(string[] input)
     {
         int[] numbers = input[0].Split(',').Select(x => int.Parse(x)).ToArray();
@@ -17,8 +26,15 @@ public record BingoGame(int[] Numbers, Board[] Boards)
     }
 }
 
-public record Board(BoardField[][] Fields)
+public class Board
 {
+    public Board(BoardField[][] fields)
+    {
+        Fields = fields;
+    }
+
+    public BoardField[][] Fields { get; }
+
     public static Board Parse(string[] input)
     {
         int boardSize = input.Length;
@@ -28,7 +44,7 @@ public record Board(BoardField[][] Fields)
         {
             fields[i] = input[i]
                 .Split(' ', StringSplitOptions.RemoveEmptyEntries)
-                .Select(x => new BoardField(int.Parse(x), false)).ToArray();
+                .Select(x => new BoardField(int.Parse(x))).ToArray();
         }
 
         return new Board(fields);
@@ -50,7 +66,7 @@ public record Board(BoardField[][] Fields)
             {
                 if (Fields[i][j].Value == number)
                 {
-                    Fields[i][j] = Fields[i][j] with { Marked = true };
+                    Fields[i][j].Marked = true;
                 }
             }
         }
@@ -60,7 +76,7 @@ public record Board(BoardField[][] Fields)
     {
         bool hasAWinningRow = Fields.Any(row => row.All(f => f.Marked));
         if (hasAWinningRow)
-        { 
+        {
             return true;
         }
 
@@ -77,8 +93,16 @@ public record Board(BoardField[][] Fields)
     }
 }
 
-public record BoardField(int Value, bool Marked)
+public class BoardField
 {
+    public BoardField(int value)
+    {
+        Value = value;
+    }
+
+    public int Value { get; }
+    public bool Marked { get; set; }
+
     public override string ToString()
     {
         return Value + (Marked ? "+" : "-");

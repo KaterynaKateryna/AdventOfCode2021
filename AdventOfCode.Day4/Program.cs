@@ -5,5 +5,9 @@ GiantSquid giantSquid = new GiantSquid();
 BingoGame bingoGame = await giantSquid.GetInput();
 
 // part 1
-long score = giantSquid.GetFinalScoreOfTheWinningBoard(bingoGame);
-Console.WriteLine(score);
+long scoreFirst = giantSquid.GetFinalScoreOfTheFirstWinningBoard(bingoGame);
+Console.WriteLine(scoreFirst);
+
+// part 1
+long scoreLast = giantSquid.GetFinalScoreOfTheLastWinningBoard(bingoGame);
+Console.WriteLine(scoreLast);

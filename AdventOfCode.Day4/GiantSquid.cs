@@ -8,10 +8,20 @@ public class GiantSquid
         return BingoGame.Parse(inputRaw);
     }
 
-    public long GetFinalScoreOfTheWinningBoard(BingoGame game)
+    public long GetFinalScoreOfTheFirstWinningBoard(BingoGame game)
     {
-        (Board board, int lastNumber) = GetTheWinningBoard(game);
+        (Board board, int lastNumber) = GetTheFirstWinningBoard(game);
+        return GetFinalScore(board, lastNumber);
+    }
 
+    public long GetFinalScoreOfTheLastWinningBoard(BingoGame game)
+    {
+        (Board board, int lastNumber) = GetTheLastWinningBoard(game);
+        return GetFinalScore(board, lastNumber);
+    }
+
+    private long GetFinalScore(Board board, int lastNumber)
+    { 
         int sum = board.Fields
             .SelectMany(r => r.Select(c => c))
             .Where(x => !x.Marked)
@@ -20,7 +30,7 @@ public class GiantSquid
         return sum * lastNumber;
     }
 
-    private (Board, int) GetTheWinningBoard(BingoGame game)
+    private (Board, int) GetTheFirstWinningBoard(BingoGame game)
     {
         for(int i = 0; i < game.Numbers.Length; ++i)
         {
@@ -40,6 +50,44 @@ public class GiantSquid
         }
 
         throw new InvalidOperationException("Nobody won");
+    }
+
+    private (Board, int) GetTheLastWinningBoard(BingoGame game)
+    {
+        int lastWinningNumber = -1;
+        IEnumerable<Board> lastWinningBoards = new List<Board>();
+
+        for (int i = 0; i < game.Numbers.Length; ++i)
+        {
+            foreach (Board board in game.Boards)
+            {
+                board.MarkNumberOnBoard(game.Numbers[i]);
+            }
+
+            if (i >= 4)
+            {
+                var winningBoards = game.Boards.Where(b => b.IsWinningBoard());
+                if (winningBoards.Any())
+                {
+                    lastWinningBoards = winningBoards;
+                    lastWinningNumber = game.Numbers[i];
+
+                    game.Boards = game.Boards.Except(winningBoards).ToArray();
+                }
+
+                if (!game.Boards.Any())
+                {
+                    return (lastWinningBoards.First(), lastWinningNumber);
+                }
+            }
+        }
+
+        if (!lastWinningBoards.Any())
+        {
+            throw new InvalidOperationException("Nobody won");
+        }
+
+        return (lastWinningBoards.First(), lastWinningNumber);
     }
 }
 
