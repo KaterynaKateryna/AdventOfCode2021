@@ -8,7 +8,7 @@ public class HydrothermalVenture
         return rawInput.Select(x => Line.Parse(x)).ToArray();
     }
 
-    public int GetCountOfPointsWithOverlappingLines(Line[] lines)
+    public int GetCountOfPointsWithOverlappingLines(Line[] lines, bool includeDiagonal = false)
     {
         Dictionary<Point, int> pointsCounts = new Dictionary<Point, int>();
         foreach (Line line in lines)
@@ -29,6 +29,19 @@ public class HydrothermalVenture
                 for (int i = start; i <= end; ++i)
                 {
                     AddLineToPoint(pointsCounts, new Point(i, line.Start.Y));
+                }
+            }
+            else if (includeDiagonal)
+            { 
+                Point start = line.Start.X < line.End.X ? line.Start : line.End;
+                Point end = line.Start.X < line.End.X ? line.End : line.Start;
+                bool goingUp = start.Y < end.Y;
+
+                for (int x = start.X, y = start.Y; x <= end.X;)
+                {
+                    AddLineToPoint(pointsCounts, new Point(x, y));
+                    x++;
+                    y += goingUp ? 1 : -1;            
                 }
             }
         }
