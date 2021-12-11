@@ -61,9 +61,30 @@ public class DumboOctopusTests
     [TestCase(100, 1656)]
     public void CountHighlightsAfterSteps_returns_correct_highlights_larger_example(int steps, long expected)
     {
-        Octopus[,] input = new Octopus[,]
+        var input = GetLargerInput();
+        DumboOctopus dumboOctopus = new DumboOctopus();
+
+        long count = dumboOctopus.CountHighlightsAfterSteps(input, steps);
+
+        Assert.AreEqual(expected, count);
+    }
+
+    [Test]
+    public void FirstStepOctopusesSynchronize_returns_correct_step()
+    {
+        var input = GetLargerInput();
+        DumboOctopus dumboOctopus = new DumboOctopus();
+
+        long step = dumboOctopus.FirstStepOctopusesSynchronize(input);
+
+        Assert.AreEqual(195, step);
+    }
+
+    private Octopus[,] GetLargerInput()
+    { 
+        return new Octopus[,]
         {
-            { 
+            {
                 new Octopus(5), new Octopus(4), new Octopus(8), new Octopus(3), new Octopus(1),
                 new Octopus(4), new Octopus(3), new Octopus(2), new Octopus(2), new Octopus(3)
             },
@@ -104,11 +125,5 @@ public class DumboOctopusTests
                 new Octopus(5), new Octopus(1), new Octopus(5), new Octopus(2), new Octopus(6)
             }
         };
-
-        DumboOctopus dumboOctopus = new DumboOctopus();
-
-        long count = dumboOctopus.CountHighlightsAfterSteps(input, steps);
-
-        Assert.AreEqual(expected, count);
     }
 }

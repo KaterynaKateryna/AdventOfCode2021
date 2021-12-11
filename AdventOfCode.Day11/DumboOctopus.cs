@@ -27,6 +27,19 @@ public class DumboOctopus
         return result;
     }
 
+    public long FirstStepOctopusesSynchronize(Octopus[,] input)
+    {
+        long step = 0;
+        long flashes = 0;
+        while (flashes < input.Length)
+        {
+            PerformStep(input);
+            step++;
+            flashes = CountHighlights(input);
+        }
+        return step;
+    }
+
     private void PerformStep(Octopus[,] input)
     {
         foreach (Octopus octopus in input)
