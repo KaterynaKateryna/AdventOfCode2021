@@ -1,6 +1,4 @@
-﻿using System.Diagnostics;
-
-namespace AdventOfCode.Day12;
+﻿namespace AdventOfCode.Day12;
 
 public class PassagePathing
 {
@@ -35,9 +33,67 @@ public class PassagePathing
             if (!visited.ContainsKey(adjacentCave) || !visited[adjacentCave])
             {
                 res += GetNumberOfPossiblePaths(graph, adjacentCave, visited);
-                visited[adjacentCave] = false;
             }
         }
+
+        visited[cave] = false;
+
+        return res;
+    }
+
+    public int GetNumberOfPossiblePaths2(string[] input)
+    {
+        CaveGraph graph = new CaveGraph(input);
+        Dictionary<string, int> visited = new Dictionary<string, int>();
+
+        int res = GetNumberOfPossiblePaths2(graph, visited, "start");
+
+        return res;
+    }
+
+    private int GetNumberOfPossiblePaths2(
+        CaveGraph graph,
+        Dictionary<string, int> visited,
+        string cave
+    )
+    {
+        if (cave == "end")
+        {
+            return 1;
+        }
+        if (visited.ContainsKey(cave))
+        {
+            visited[cave]++;
+        }
+        else
+        {
+            visited[cave] = 1;
+        }
+
+        List<string> adjacentCaves = graph.Caves[cave];
+        int res = 0;
+        foreach (string adjacentCave in adjacentCaves)
+        {
+            if (
+                char.IsUpper(adjacentCave[0]) ||
+                (
+                    char.IsLower(adjacentCave[0]) && 
+                    adjacentCave != "start" && 
+                    (
+                        !visited.ContainsKey(adjacentCave) 
+                        || 
+                        visited[adjacentCave] == 0
+                        ||
+                        (!visited.Any(x => char.IsLower(x.Key[0]) && x.Value > 1)))
+                    )
+                )
+            {
+                res += GetNumberOfPossiblePaths2(graph, visited, adjacentCave);
+            }
+        }
+
+        visited[cave]--;
+
         return res;
     }
 }
