@@ -1,4 +1,6 @@
-﻿namespace AdventOfCode.Day13;
+﻿using System.Text;
+
+namespace AdventOfCode.Day13;
 
 public class TransparentOrigami
 {
@@ -27,7 +29,7 @@ public class TransparentOrigami
         return (points, folds);
     }
 
-    public HashSet<Point> Fold(List<Point> points, Fold fold)
+    public HashSet<Point> Fold(IEnumerable<Point> points, Fold fold)
     {
         HashSet<Point> result = new HashSet<Point>();
         if (fold.Direction == FoldDirection.X)
@@ -60,6 +62,32 @@ public class TransparentOrigami
         }
 
         return result;
+    }
+
+    public HashSet<Point> Fold(IEnumerable<Point> points, IEnumerable<Fold> folds)
+    {
+        HashSet<Point> result = new HashSet<Point>(points);
+        foreach (Fold fold in folds)
+        {
+            result = Fold(result, fold);
+        }
+        return result;
+    }
+
+    public string ToString(IEnumerable<Point> points)
+    {
+        int maxX = points.Max(p => p.X);
+        int maxY = points.Max(p => p.Y);
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i <= maxY; ++i)
+        {
+            for (int j = 0; j <= maxX; ++j)
+            {
+                sb.Append(points.Contains(new Point(j, i)) ? "#" : ".");
+            }
+            sb.AppendLine();
+        }
+        return sb.ToString();
     }
 }
 

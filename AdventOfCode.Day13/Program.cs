@@ -7,3 +7,7 @@ TransparentOrigami transparentOrigami = new TransparentOrigami();
 // part 1
 HashSet<Point> result = transparentOrigami.Fold(points, folds.First());
 Console.WriteLine(result.Count());
+
+// part 2
+HashSet<Point> result2 = transparentOrigami.Fold(points, folds);
+Console.WriteLine(transparentOrigami.ToString(result2));

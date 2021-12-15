@@ -41,7 +41,7 @@ public class TransparentOrigamiTests
 
         // second fold
         Fold fold2 = new Fold(FoldDirection.X, 5);
-        HashSet<Point> result2 = transparentOrigami.Fold(result.ToList(), fold2);
+        HashSet<Point> result2 = transparentOrigami.Fold(result, fold2);
 
         Assert.AreEqual(16, result2.Count);
     }
