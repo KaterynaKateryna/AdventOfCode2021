@@ -60,4 +60,68 @@ public class ChitonTests
 
         Assert.AreEqual(8, result);
     }
+
+    [Test]
+    public void Chiton_should_build_full_map()
+    {
+        int[][] input = new int[][]
+        {
+            new int[]{ 1 }
+        };
+
+        Chiton chiton = new Chiton();
+        int[][] result = chiton.GetFullMap(input);
+
+        int[][] expected = new int[][]
+        {
+            new int[]{ 1, 2, 3, 4, 5 },
+            new int[]{ 2, 3, 4, 5, 6 },
+            new int[]{ 3, 4, 5, 6, 7 },
+            new int[]{ 4, 5, 6, 7, 8 },
+            new int[]{ 5, 6, 7, 8, 9 }
+        };
+
+        Assert.AreEqual(expected.Length, result.Length);
+
+        for (int i = 0; i < result.Length; ++i)
+        {
+            Assert.AreEqual(expected[i].Length, result[i].Length);
+            for (int j = 0; j < result[0].Length; ++j)
+            {
+                Assert.AreEqual(expected[i][j], result[i][j]);
+            }
+        }
+    }
+
+    [Test]
+    public void Chiton_should_build_full_map_2()
+    {
+        int[][] input = new int[][]
+        {
+            new int[]{ 8 }
+        };
+
+        Chiton chiton = new Chiton();
+        int[][] result = chiton.GetFullMap(input);
+
+        int[][] expected = new int[][]
+        {
+            new int[]{ 8, 9, 1, 2, 3 },
+            new int[]{ 9, 1, 2, 3, 4 },
+            new int[]{ 1, 2, 3, 4, 5 },
+            new int[]{ 2, 3, 4, 5, 6 },
+            new int[]{ 3, 4, 5, 6, 7 }
+        };
+
+        Assert.AreEqual(expected.Length, result.Length);
+
+        for (int i = 0; i < result.Length; ++i)
+        {
+            Assert.AreEqual(expected[i].Length, result[i].Length);
+            for (int j = 0; j < result[0].Length; ++j)
+            {
+                Assert.AreEqual(expected[i][j], result[i][j]);
+            }
+        }
+    }
 }
