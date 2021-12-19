@@ -13,14 +13,33 @@ public class TrickShot
         return new TargetArea(int.Parse(xs[0]), int.Parse(xs[1]), int.Parse(ys[0]), int.Parse(ys[1]));
     }
 
+    public int GetAllVelocities(TargetArea targetArea)
+    { 
+        List<int> xs = GetPossibleXs(targetArea);
+        List<int> ys = GetPossibleYs(targetArea);
+
+        int velocities = 0;
+        foreach (int x in xs)
+        {
+            foreach (int y in ys)
+            {
+                int? height = GetHighestPointForVelocity(new Velocity(x, y), targetArea);
+                if (height.HasValue)
+                {
+                    velocities++;
+                }
+            }
+        }
+        return velocities;
+    }
+
     public int GetHighestTrajectoryPoint(TargetArea targetArea)
     {
         int x = GetBestX(targetArea);
+        List<int> ys = GetPossibleYs(targetArea);
 
         int maxResult = 0;
-        // brute force, this is not the correct way.
-        // there is no guarantee y is within this range
-        for (int y = 0; y < 10000; ++y) 
+        foreach(int y in ys)
         {
             int? height = GetHighestPointForVelocity(new Velocity(x, y), targetArea);
             if (height.HasValue && height > maxResult)
@@ -45,6 +64,34 @@ public class TrickShot
         throw new Exception("There must be at least one x that satisfies the condition");
     }
 
+    private List<int> GetPossibleXs(TargetArea targetArea)
+    {
+        List<int> result = new List<int>();
+        for (int i = 0; i < targetArea.XMax + 1; ++i)
+        {
+            if (WillXHitArea(i, targetArea))
+            {
+                result.Add(i);
+            }
+        }
+
+        return result;
+    }
+
+    private List<int> GetPossibleYs(TargetArea targetArea)
+    {
+        List<int> result = new List<int>();
+        for (int i = targetArea.YMin; i < -targetArea.YMin; ++i)
+        {
+            if (WillYHitArea(i, targetArea))
+            {
+                result.Add(i);
+            }
+        }
+
+        return result;
+    }
+
     private bool WillXHitArea(int x, TargetArea targetArea)
     {
         int distance = x;
@@ -56,7 +103,7 @@ public class TrickShot
                 return false; // overshot
             }
 
-            if (targetArea.XMin < distance && distance < targetArea.XMax)
+            if (targetArea.XMin <= distance && distance <= targetArea.XMax)
             {
                 return true; // in the area
             }
@@ -66,6 +113,23 @@ public class TrickShot
         }
 
         return false; // fell short
+    }
+
+    private bool WillYHitArea(int y, TargetArea targetArea)
+    {
+        int position = y;
+
+        while (targetArea.YMin <= position)
+        {
+            if (targetArea.YMin <= position && position <= targetArea.YMax)
+            {
+                return true; // in the area
+            }
+
+            y--;
+            position += y;
+        }
+        return false; // overshot
     }
 
     private int? GetHighestPointForVelocity(Velocity velocity, TargetArea targetArea)
