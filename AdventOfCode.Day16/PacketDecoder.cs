@@ -58,18 +58,55 @@ public class PacketDecoder
 
         return versionsSum;
     }
+
+
+    public long GetValueOfPacket(bool[] input)
+    {
+        Packet rootPacket = PacketFactory.Parse(input);
+        return GetValueOfPacket(rootPacket);
+    }
+
+    public long GetValueOfPacket(Packet packet)
+    {
+        if (packet is LiteralPacket)
+        {
+            return ((LiteralPacket)packet).LiteralValue;
+        }
+
+        OperatorPacket operatorPacket = (OperatorPacket)packet;
+        List<long> values = operatorPacket.Packets.Select(p => GetValueOfPacket(p)).ToList();
+        switch (operatorPacket.TypeId)
+        {
+            case 0:
+                return checked(values.Sum());
+            case 1:
+                return checked(values.Aggregate((a, b) => a * b));
+            case 2:
+                return values.Min();
+            case 3:
+                return values.Max();
+            case 5:
+                return values[0] > values[1] ? 1 : 0;
+            case 6:
+                return values[0] < values[1] ? 1 : 0;
+            case 7:
+                return values[0] == values[1] ? 1 : 0;
+            default:
+                throw new ArgumentException("Unsupported operator");
+        }
+    }
 }
 
 public class PacketFactory
 {
     public static Packet Parse(bool[] input)
     {
-        int version = BoolArrayToInt(input.Take(3).ToArray());
-        int typeId = BoolArrayToInt(input.Skip(3).Take(3).ToArray());
+        int version = (int)BoolArrayToInt(input.Take(3).ToArray());
+        int typeId = (int)BoolArrayToInt(input.Skip(3).Take(3).ToArray());
 
         if (typeId == 4)
         {
-            (int literal, int literalLength) = GetLiteralValue(input.Skip(6).ToArray());
+            (long literal, int literalLength) = GetLiteralValue(input.Skip(6).ToArray());
 
             return new LiteralPacket 
             { 
@@ -86,7 +123,7 @@ public class PacketFactory
 
             if (packet.LengthTypeId == 1)
             {
-                int numberOfSubPackets = BoolArrayToInt(input.Skip(7).Take(11).ToArray());
+                int numberOfSubPackets = (int)BoolArrayToInt(input.Skip(7).Take(11).ToArray());
                 int parsedSubpacketsNumber = 0;
                 int parsedSubpacketsLength = 0;
                 while (parsedSubpacketsNumber < numberOfSubPackets)
@@ -101,7 +138,7 @@ public class PacketFactory
             }
             else
             {
-                int totalLengthOfSubPackets = BoolArrayToInt(input.Skip(7).Take(15).ToArray());
+                int totalLengthOfSubPackets = (int)BoolArrayToInt(input.Skip(7).Take(15).ToArray());
                 int parsedSubpacketsLength = 0;
 
                 while (parsedSubpacketsLength < totalLengthOfSubPackets)
@@ -116,7 +153,7 @@ public class PacketFactory
         }
     }
 
-    private static (int literal, int length) GetLiteralValue(bool[] input)
+    private static (long literal, int length) GetLiteralValue(bool[] input)
     {
         int position = 0;
         bool leadingBit = input[position];
@@ -134,14 +171,19 @@ public class PacketFactory
         return (BoolArrayToInt(literalBits.ToArray()), position);
     }
 
-    private static int BoolArrayToInt(bool[] bits)
+    private static long BoolArrayToInt(bool[] bits)
     {
-        int result = 0;
+        if (bits.Length > 64)
+        {
+            throw new NotImplementedException();
+        }
+
+        long result = 0;
         for (int i = 0; i < bits.Length; i++)
         {
             if (bits[i])
             {
-                result |= 1 << (bits.Length - i - 1);
+                result |= 1L << (bits.Length - i - 1);
             }
         }
         return result;
@@ -159,7 +201,7 @@ public class Packet
 
 public class LiteralPacket : Packet
 { 
-    public int LiteralValue { get; set; }
+    public long LiteralValue { get; set; }
 }
 
 public class OperatorPacket : Packet

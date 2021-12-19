@@ -9,3 +9,7 @@ bool[] bits = packetDecoder.ConvertHexToBits(input);
 int res = packetDecoder.VersionNumbersSum(bits);
 Console.WriteLine(res);
 
+// part 2
+long value = packetDecoder.GetValueOfPacket(bits);
+Console.WriteLine(value);
+

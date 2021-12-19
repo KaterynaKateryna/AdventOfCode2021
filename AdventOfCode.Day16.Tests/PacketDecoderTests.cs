@@ -53,4 +53,85 @@ public class PacketDecoderTests
 
         result.Should().Be(expected);
     }
+
+    [TestCase("C200B40A82", 3)]
+    [TestCase("04005AC33890", 54)]
+    [TestCase("880086C3E88112", 7)]
+    [TestCase("CE00C43D881120", 9)]
+    [TestCase("D8005AC2A8F0", 1)]
+    [TestCase("F600BC2D8F", 0)]
+    [TestCase("9C005AC2F8F0", 0)]
+    [TestCase("9C0141080250320F1802104A08", 1)]
+    [TestCase("D2FE28", 2021)]
+    [TestCase("38006F45291200", 1)]
+    [TestCase("EE00D40C823060", 3)]
+    public void GetValueOfPacket_should_return_correct_value(string input, long expected)
+    {
+        PacketDecoder packetDecoder = new PacketDecoder();
+
+        bool[] parsedInput = packetDecoder.ConvertHexToBits(input);
+        long result = packetDecoder.GetValueOfPacket(parsedInput);
+
+        result.Should().Be(expected);
+    }
+
+    [Test]
+    public void GetValueOfPacket_should_return_correct_value_single_sum()
+    {
+        PacketDecoder packetDecoder = new PacketDecoder();
+
+        OperatorPacket packet = new OperatorPacket();
+        packet.TypeId = 0;
+        packet.Packets.Add(new LiteralPacket { LiteralValue = 12 });
+
+        long result = packetDecoder.GetValueOfPacket(packet);
+
+        result.Should().Be(12);
+    }
+
+    [Test]
+    public void GetValueOfPacket_should_return_correct_value_three_sum()
+    {
+        PacketDecoder packetDecoder = new PacketDecoder();
+
+        OperatorPacket packet = new OperatorPacket();
+        packet.TypeId = 0;
+        packet.Packets.Add(new LiteralPacket { LiteralValue = 12 });
+        packet.Packets.Add(new LiteralPacket { LiteralValue = 10 });
+        packet.Packets.Add(new LiteralPacket { LiteralValue = 1 });
+
+        long result = packetDecoder.GetValueOfPacket(packet);
+
+        result.Should().Be(23);
+    }
+
+    [Test]
+    public void GetValueOfPacket_should_return_correct_value_single_product()
+    {
+        PacketDecoder packetDecoder = new PacketDecoder();
+
+        OperatorPacket packet = new OperatorPacket();
+        packet.TypeId = 1;
+        packet.Packets.Add(new LiteralPacket { LiteralValue = 12 });
+
+        long result = packetDecoder.GetValueOfPacket(packet);
+
+        result.Should().Be(12);
+    }
+
+    [Test]
+    public void GetValueOfPacket_should_return_correct_value_three_product()
+    {
+        PacketDecoder packetDecoder = new PacketDecoder();
+
+        OperatorPacket packet = new OperatorPacket();
+        packet.TypeId = 1;
+        packet.Packets.Add(new LiteralPacket { LiteralValue = 12 });
+        packet.Packets.Add(new LiteralPacket { LiteralValue = 10 });
+        packet.Packets.Add(new LiteralPacket { LiteralValue = 2 });
+
+        long result = packetDecoder.GetValueOfPacket(packet);
+
+        result.Should().Be(240);
+    }
 }
