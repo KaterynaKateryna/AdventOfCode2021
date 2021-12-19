@@ -37,15 +37,19 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AdventOfCode.Day12", "Adven
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AdventOfCode.Day12.Tests", "AdventOfCode.Day12.Tests\AdventOfCode.Day12.Tests.csproj", "{3321F352-E2C2-447B-A636-03D664C2FC6E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AdventOfCode.Day13", "AdventOfCode.Day13\AdventOfCode.Day13.csproj", "{7599695B-EE02-436B-834A-38FB4A1E78AD}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AdventOfCode.Day13", "AdventOfCode.Day13\AdventOfCode.Day13.csproj", "{7599695B-EE02-436B-834A-38FB4A1E78AD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AdventOfCode.Day13.Tests", "AdventOfCode.Day13.Tests\AdventOfCode.Day13.Tests.csproj", "{9060603D-9AA9-4E87-8C52-DC08B87F3855}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AdventOfCode.Day13.Tests", "AdventOfCode.Day13.Tests\AdventOfCode.Day13.Tests.csproj", "{9060603D-9AA9-4E87-8C52-DC08B87F3855}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AdventOfCode.Day14", "AdventOfCode.Day14\AdventOfCode.Day14.csproj", "{22E4CAC9-BC20-44E4-A26B-7D392455AA5F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AdventOfCode.Day14", "AdventOfCode.Day14\AdventOfCode.Day14.csproj", "{22E4CAC9-BC20-44E4-A26B-7D392455AA5F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AdventOfCode.Day15", "AdventOfCode.Day15\AdventOfCode.Day15.csproj", "{F09B7C6A-8BA9-4581-8F15-4AB32D7AAC6D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AdventOfCode.Day15", "AdventOfCode.Day15\AdventOfCode.Day15.csproj", "{F09B7C6A-8BA9-4581-8F15-4AB32D7AAC6D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AdventOfCode.Day15.Tests", "AdventOfCode.Day15.Tests\AdventOfCode.Day15.Tests.csproj", "{7EDB5016-7153-4120-9DC4-5B75951410EE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AdventOfCode.Day15.Tests", "AdventOfCode.Day15.Tests\AdventOfCode.Day15.Tests.csproj", "{7EDB5016-7153-4120-9DC4-5B75951410EE}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AdventOfCode.Day16", "AdventOfCode.Day16\AdventOfCode.Day16.csproj", "{B387543B-7DB9-42FB-B985-5DB8331D7297}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AdventOfCode.Day16.Tests", "AdventOfCode.Day16.Tests\AdventOfCode.Day16.Tests.csproj", "{3EEDC6C3-4380-4902-A92E-3A60D2FC006F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -141,6 +145,14 @@ Global
 		{7EDB5016-7153-4120-9DC4-5B75951410EE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7EDB5016-7153-4120-9DC4-5B75951410EE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7EDB5016-7153-4120-9DC4-5B75951410EE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B387543B-7DB9-42FB-B985-5DB8331D7297}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B387543B-7DB9-42FB-B985-5DB8331D7297}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B387543B-7DB9-42FB-B985-5DB8331D7297}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B387543B-7DB9-42FB-B985-5DB8331D7297}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3EEDC6C3-4380-4902-A92E-3A60D2FC006F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3EEDC6C3-4380-4902-A92E-3A60D2FC006F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3EEDC6C3-4380-4902-A92E-3A60D2FC006F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3EEDC6C3-4380-4902-A92E-3A60D2FC006F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
