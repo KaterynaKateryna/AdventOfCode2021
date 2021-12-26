@@ -17,6 +17,23 @@ public class Snailfish
         return Add(numbers).GetMagnitude();
     }
 
+    public long GetMaxMagnitude(List<SnailfishNumber> numbers)
+    { 
+        long maxMagnitude = 0;
+        for (int i = 0; i < numbers.Count; ++i)
+        {
+            for (int j = 0; j < numbers.Count; ++j)
+            {
+                if (i != j)
+                {
+                    long magnitude = Add(numbers[i], numbers[j]).GetMagnitude();
+                    maxMagnitude = magnitude > maxMagnitude ? magnitude : maxMagnitude;
+                }
+            }
+        }
+        return maxMagnitude;
+    }
+
     public SnailfishNumber Add(List<SnailfishNumber> numbers)
     {
         return numbers.Aggregate((one, other) => Add(one, other));
@@ -26,8 +43,8 @@ public class Snailfish
     {
         SnailfishNumber newNumber = new SnailfishNumber();
         newNumber.Root = new Node();
-        newNumber.Root.AddChild(one.Root);
-        newNumber.Root.AddChild(other.Root);
+        newNumber.Root.AddChild(one.Root.GetDeepCopy());
+        newNumber.Root.AddChild(other.Root.GetDeepCopy());
 
         ReduceNumber(newNumber);
 
@@ -159,6 +176,11 @@ public class SnailfishNumber
         return number;
     }
 
+    public SnailfishNumber GetDeepCopy()
+    {
+        return new SnailfishNumber { Root = Root.GetDeepCopy() };
+    }
+
     public override string ToString()
     {
         return Root.ToString();
@@ -210,6 +232,23 @@ public class Node
         {
             Right.Visit(leaves, level);
         }
+    }
+
+    public Node GetDeepCopy()
+    {
+        Node node = new Node();
+        node.Value = this.Value;
+        if (this.Left != null)
+        {
+            node.Left = this.Left.GetDeepCopy();
+            node.Left.Parent = node;
+        }
+        if (this.Right != null)
+        {
+            node.Right = this.Right.GetDeepCopy();
+            node.Right.Parent = node;
+        }
+        return node;
     }
 
     public override string ToString()
