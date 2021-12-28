@@ -224,6 +224,9 @@ public class BeaconScannerTests
 
         Assert.AreEqual(new Coordinates(0, 0, 0), scanners[0].Position);
         Assert.AreEqual(new Coordinates(68, -1246, -43), scanners[1].Position);
+        Assert.AreEqual(new Coordinates(1105, -1205, 1229), scanners[2].Position);
+        Assert.AreEqual(new Coordinates(-92, -2380, -20), scanners[3].Position);
+        Assert.AreEqual(new Coordinates(-20, -1133, 1061), scanners[4].Position);
     }
 
 
