@@ -72,8 +72,26 @@ public class BeaconScanner
 
     public long GetBeaconCount(List<Scanner> scanners)
     {
-        CalculateScannerCoordinates(scanners);
         return scanners.SelectMany(s => s.Beacons).Distinct().LongCount();
+    }
+
+    public long GetMaxManhattanDistance(List<Scanner> scanners)
+    {
+        List<Coordinates> positions = scanners.Select(x => x.Position).ToList();
+
+        long max = -1L;
+        for (int i = 0; i < positions.Count-1; ++i)
+        {
+            for (int j = i+1; j < positions.Count; ++j)
+            {
+                long distance = GetManhattanDistance(positions[i], positions[j]);
+                if (distance > max)
+                { 
+                    max = distance;
+                }
+            }
+        }
+        return max;
     }
 
     public (bool overlap, int oneIndex, int otherIndex, List<Coordinates> one, List<Coordinates> other) Overlap(Scanner one, Scanner other)
@@ -98,6 +116,11 @@ public class BeaconScanner
         }
 
         return (false, -1, -1, null, null);
+    }
+
+    public long GetManhattanDistance(Coordinates one, Coordinates other)
+    { 
+        return Math.Abs(one.X - other.X) + Math.Abs(one.Y - other.Y) + Math.Abs(one.Z - other.Z);
     }
 }
 

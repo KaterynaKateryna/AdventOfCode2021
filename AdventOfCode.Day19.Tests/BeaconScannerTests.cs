@@ -443,6 +443,7 @@ public class BeaconScannerTests
         BeaconScanner beaconScanner = new BeaconScanner();
         List<Scanner> scanners = beaconScanner.GetInput(input);
 
+        beaconScanner.CalculateScannerCoordinates(scanners);
         long beaconCount = beaconScanner.GetBeaconCount(scanners);
 
         Assert.AreEqual(79, beaconCount);
@@ -510,6 +511,7 @@ public class BeaconScannerTests
         BeaconScanner beaconScanner = new BeaconScanner();
         List<Scanner> scanners = beaconScanner.GetInput(input);
 
+        beaconScanner.CalculateScannerCoordinates(scanners);
         long beaconCount = beaconScanner.GetBeaconCount(scanners);
 
         Assert.AreEqual(38, beaconCount);
