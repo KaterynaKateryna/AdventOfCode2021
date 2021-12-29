@@ -7,3 +7,7 @@ TrenchMap trenchMap = new TrenchMap();
 // part 1
 long count = trenchMap.GetLitPixelsAfterEnhancements(algorithm, image, 2);
 Console.WriteLine(count);
+
+// part 2
+long count2 = trenchMap.GetLitPixelsAfterEnhancements(algorithm, image, 50);
+Console.WriteLine(count2);
