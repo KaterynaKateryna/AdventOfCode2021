@@ -12,4 +12,13 @@ public class DiracDiceTests
 
         Assert.AreEqual(739785, result);
     }
+
+    [Test]
+    public void GetWinningUniverses_should_return_correct_value()
+    {
+        DiracDice dice = new DiracDice();
+        long result = dice.GetWinningUniverses(4, 8);
+
+        Assert.AreEqual(444356092776315, result);
+    }
 }
